@@ -1,0 +1,66 @@
+          //System.out.println("File " + fileName + " cannot convert to object.");
+        }
+        return null;
+    }
+
+    public void serializeBillboard(List<List<Billboard>> billboardList, String fileName) {
+        try {
+            ObjectOutputStream ojectOutputStream = null;
+            if (Developer.SYSTEM.equals("Mac"))
+                ojectOutputStream = new ObjectOutputStream(new FileOutputStream("./" + fileName));
+
+            if (Developer.SYSTEM.equals("Win"))
+                ojectOutputStream = new ObjectOutputStream(new FileOutputStream(root + "\\" + fileName));
+
+            if (Developer.SYSTEM.equals("Linux"))
+                ojectOutputStream = new ObjectOutputStream(new FileOutputStream(root + "/" + fileName));
+
+            ojectOutputStream.writeObject(billboardList);
+            ojectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<List<Billboard>> deserializeBillboard(String fileName) {
+        try {
+            ObjectInputStream objectInputStream = null;
+            if (Developer.SYSTEM.equals("Mac"))
+                objectInputStream = new ObjectInputStream(new FileInputStream("./" + fileName));
+
+            if (Developer.SYSTEM.equals("Win"))
+                objectInputStream = new ObjectInputStream(new FileInputStream(root + "\\" + fileName));
+
+            if (Developer.SYSTEM.equals("Linux"))
+                objectInputStream = new ObjectInputStream(new FileInputStream(root + "/" + fileName));
+
+            List<List<Billboard>> billboardList = (List<List<Billboard>>) objectInputStream.readObject();
+            objectInputStream.close();
+            return billboardList;
+        } catch (FileNotFoundException e) {
+            //System.out.println("File " + fileName + " doesn't exist.");
+        } catch (IOException e) {
+            //System.out.println("File " + fileName + " cannot read.");
+        } catch (ClassNotFoundException e) {
+            //System.out.println("File " + fileName + " cannot convert to object.");
+        }
+        return  null;
+    }
+
+    public void serializeMatrix(ArrayList<ArrayList<ClusterBillboard>> clusterMatrix, String fileName) {
+
+        try {
+            ObjectOutputStream ojectOutputStream = new ObjectOutputStream(
+                    new FileOutputStream(root + fileName));
+            ojectOutputStream.writeObject(clusterMatrix);
+            ojectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<ArrayList<ClusterBillboard>> deserializeMatrix(String fileName) {
+
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(
+          
